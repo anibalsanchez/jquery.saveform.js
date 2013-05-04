@@ -1,17 +1,21 @@
-#No documentation yet!
-(feel free to write a bit about it)
+# jquery.xtsaveform.js 1.0.0
 
-## Download
- Get the [raw](https://raw.github.com/yckart/jquery.saveform.js/master/jquery.saveform.js) script, download the complete [package](https://github.com/yckart/jquery.saveform.js/zipball/master) or fork it on [GitHub](https://github.com/yckart/jquery.saveform.js/).
+jquery.xtsaveform.js 1.0.0 - https://github.com/anibalsanchez/jquery.xtsaveform.js
+
+Saves automatically all entered form fields, to restore them in the next visit.
+
+Based on the original work of Yannick Albert (http://yckart.com) jquery.saveform.js 0.0.1 - https://github.com/yckart/jquery.saveform.js
+
+I've modified the code to support "save on submit" and "restore when user come back". Also, added support for radio, select, and multi-select fields. 
 
 ## Support
 
- [@yckart](http://twitter.com/yckart) #jquery #saveform
- [http://yckart.com](http://yckart.com/)
+ [@anibal_sanchez](http://twitter.com/anibal_sanchez) #jquery #saveform
+ [http://www.extly.com](http://www.extly.com/)
 
 
 ###License
-Copyright (c) 2013 Yannick Albert ([http://yckart.com/](http://yckart.com/))
+Copyright (c) 2013 Anibal Sanchez ([http://www.extly.com](http://www.extly.com/))
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
