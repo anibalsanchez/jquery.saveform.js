@@ -59,7 +59,7 @@
 		};
 		
 		function save() {
-			$this.find('input:not(:password,:submit)').each(
+			$this.find('input:not([type=password],[type=submit],[type=hidden])').each(
 					function(index) {
 						saveInput($(this), index);
 					});
@@ -96,7 +96,7 @@
 		};		
 		
 		function restore() {
-			$this.find('input:not(:password,:submit)').each(
+			$this.find('input:not([type=password],[type=submit],[type=hidden])').each(
 					function(index) {
 						restoreInput($(this), index);
 					});
