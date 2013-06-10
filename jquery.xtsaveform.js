@@ -1,5 +1,5 @@
 /**
- * jquery.xtsaveform.js 1.0.0 - https://github.com/anibalsanchez/jquery.saveform.js
+ * jquery.xtsaveform.js 1.0.1 - https://github.com/anibalsanchez/jquery.saveform.js
  * Saves automatically all entered form fields, to restore them in the next visit.
  * 
  * Copyright (c) 2013 Anibal Sanchez (http://www.extly.com) Licensed under the MIT
@@ -10,67 +10,25 @@
  */
 
 ;(function($, window) {
+	"use strict";
 	
-	// prefix - inorder to seperate the fields of different forms
-	$.fn.xtautosave = function(prefix) {
-		var storage = window.localStorage, $this = this;
+	// this.prefix - inorder to seperate the fields of different forms
+	$.fn.xtautosave = function(prefix_param) {
+		var storage = window.localStorage, $this = this, prefix;
 
-		if (typeof prefix === 'undefined') {
+		if (typeof $this.prefix_param === 'undefined') {
 			prefix = $this.attr('id') || $this.attr('name') || 'no-Id-Or-Name-Given';
+		} else {
+			prefix = $this.prefix_param;
 		}
 
-		prefix += "_"; // _ this will give unique names and will not clash with
+		// _ $this will give unique names and will not clash with
 		// other fields
-		
-		getKey = function(index) {
-			return prefix + index;
-		};
-		
-		getSelectKey = function(index) {
-			return 'S' + prefix + index;
-		};		
+		prefix += "_";
+		$this.attr('prefix', prefix);
 
-		saveInput = function(elem, index) {
-			var value, key = getKey(index);
-			
-			if ((elem.attr('type') === 'checkbox') || (elem.attr('type') === 'radio')) {
-				value = elem.prop('checked');
-			} else {
-				value = elem.val();
-			}
-			
-			if ((value) && (value !== '')) {
-				storage.setItem(key, value);			
-			}
-			else {
-				storage.removeItem(key);
-			}
-		};
-		
-		saveSelect = function(elem, index) {
-			var value = elem.val(), key = getSelectKey(index);
-			
-			if ((value) && (value !== '')) {
-				storage.setItem(key, value);			
-			}
-			else {
-				storage.removeItem(key);
-			}			
-		};
-		
-		function save() {
-			$this.find('input:not([type=password],[type=submit],[type=hidden])').each(
-					function(index) {
-						saveInput($(this), index);
-					});
-			$this.find('select').each(
-					function(index) {
-						saveSelect($(this), index);
-					});			
-		};
-		
-		restoreInput = function(elem, index) {
-			var value = storage.getItem(getKey(index));
+		function restoreInput(elem, index) {
+			var key = $.fn.xtautosave.getKey($this, index), value = storage.getItem(key);
 			
 			if (!value) {
 				return;
@@ -81,10 +39,10 @@
 			} else {
 				elem.val(value);
 			}		
-		};
+		}
 
-		restoreSelect = function(elem, index) {
-			var value = storage.getItem(getSelectKey(index));
+		function restoreSelect(elem, index) {
+			var key = $.fn.xtautosave.getSelectKey($this, index), value = storage.getItem(key);
 			
 			if (!value) {
 				return;
@@ -93,23 +51,79 @@
 			value = value.split(',');
 			
 			elem.val(value);
-		};		
+		}
 		
 		function restore() {
-			$this.find('input:not([type=password],[type=submit],[type=hidden])').each(
-					function(index) {
-						restoreInput($(this), index);
+			var elems;
+			
+			elems = $this.find('input:not([type=password],[type=submit],[type=hidden])');
+			elems.each(
+					function(index, elem) {
+						restoreInput($(elem), index);
 					});
-			$this.find('select').each(
-					function(index) {
-						restoreSelect($(this), index);
+			
+			elems = $this.find('select');
+			elems.each(
+					function(index, elem) {
+						restoreSelect($(elem), index);
 					});			
 		}
-
+		
 		$this.on({
-			submit : save
+			submit : $.fn.xtautosave.save
 		});
 		restore();
 
 	};
+	
+	$.fn.xtautosave.getKey = function(elem, index) {
+		return elem.attr('prefix') + index;
+	};
+	
+	$.fn.xtautosave.getSelectKey = function(elem, index) {
+		return 'S' + elem.attr('prefix') + index;
+	};		
+	
+	$.fn.xtautosave.saveInput = function($this, elem, index) {
+		var value, key = $.fn.xtautosave.getKey($this, index), storage = window.localStorage;
+		
+		if ((elem.attr('type') === 'checkbox') || (elem.attr('type') === 'radio')) {
+			value = elem.prop('checked');
+		} else {
+			value = elem.val();
+		}
+		
+		if ((value) && (value !== '')) {
+			storage.setItem(key, value);			
+		}
+		else {
+			storage.removeItem(key);
+		}
+	};
+	
+	$.fn.xtautosave.saveSelect = function($this, elem, index) {
+		var value = elem.val(), key = $.fn.xtautosave.getSelectKey($this, index), storage = window.localStorage;
+		
+		if ((value) && (value !== '')) {
+			storage.setItem(key, value);			
+		}
+		else {
+			storage.removeItem(key);
+		}			
+	};	
+	
+	$.fn.xtautosave.save = function () {
+		var $this = $(this), elems;		
+		elems = $this.find('input:not([type=password],[type=submit],[type=hidden])');
+		elems.each(
+				function(index, elem) {
+					$.fn.xtautosave.saveInput($this, $(elem), index);
+				});
+		elems = $this.find('select');
+		elems.each(
+				function(index, elem) {
+					$.fn.xtautosave.saveSelect($this, $(elem), index);
+				});			
+	};
+	
 }(jQuery, window));
