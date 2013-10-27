@@ -1,5 +1,5 @@
 /**
- * jquery.xtsaveform.js 1.0.1 - https://github.com/anibalsanchez/jquery.saveform.js
+ * jquery.xtsaveform.js 1.1.0 - https://github.com/anibalsanchez/jquery.saveform.js
  * Saves automatically all entered form fields, to restore them in the next visit.
  * 
  * Copyright (c) 2013 Anibal Sanchez (http://www.extly.com) Licensed under the MIT
@@ -35,9 +35,9 @@
 			}
 			
 			if ((elem.attr('type') === 'checkbox') || (elem.attr('type') === 'radio')) {
-				elem.prop('checked', value);
+				elem.prop('checked', value).change();
 			} else {
-				elem.val(value);
+				elem.val(value).change();
 			}		
 		}
 
@@ -50,7 +50,7 @@
 			// Just in case it's an array
 			value = value.split(',');
 			
-			elem.val(value);
+			elem.val(value).change();
 		}
 		
 		function restore() {
