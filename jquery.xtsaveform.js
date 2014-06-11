@@ -56,7 +56,7 @@
 		function restore() {
 			var elems;
 			
-			elems = $this.find('input:not([type=password],[type=submit],[type=hidden])');
+			elems = $this.find('input:not([type=password],[type=submit],[type=hidden]),input.xtd-save-this');
 			elems.each(
 					function(index, elem) {
 						restoreInput($(elem), index);
@@ -114,7 +114,7 @@
 	
 	$.fn.xtautosave.save = function () {
 		var $this = $(this), elems;		
-		elems = $this.find('input:not([type=password],[type=submit],[type=hidden])');
+		elems = $this.find('input:not([type=password],[type=submit],[type=hidden]),input.xtd-save-this');
 		elems.each(
 				function(index, elem) {
 					$.fn.xtautosave.saveInput($this, $(elem), index);
