@@ -1,6 +1,6 @@
 # jquery.xtsaveform.js 1.1.0
 
-jquery.xtsaveform.js 1.1.0 - https://github.com/anibalsanchez/jquery.xtsaveform.js
+jquery.xtsaveform.js 1.1.0 - https://github.com/anibalsanchez/jquery.saveform.js
 
 Saves automatically all entered form fields, to restore them in the next visit.
 
